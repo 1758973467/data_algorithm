@@ -33,7 +33,6 @@ public class BinaryArrayLinkedTree<T>implements BinaryTreeADT<T> {
     public boolean contains(T targetElement) {
         return find(targetElement)==null?false:true;
     }
-
     @Override
     public T find(T targetElement) {
         int size=size();

@@ -60,7 +60,7 @@ public class BinaryArrayLinkedSearchTree<T>extends BinaryArrayLinkedTree<T>imple
         }
 
     }
-
+//TODO error behavior
     @Override
     public T removeElement(T targetElement) {
         if(!(targetElement instanceof Comparable))return null;
@@ -90,12 +90,16 @@ public class BinaryArrayLinkedSearchTree<T>extends BinaryArrayLinkedTree<T>imple
                         left=temp.getLeft();
                     }else break;
                 }
-                //如果未移动,即 root.right.left==-1
                 if(parentIndex==-1){
+                    parentIndex=right;
+                }
+                if(tree[right].getLeft()==-1){
                     ArrayTreeNode<T>rightNode=tree[right];
                     rightNode.setLeft(rootNode.getLeft());
                     rootIndex=right;
-                }else{
+                }
+                //如果未移动,即 root.right.left==-1
+                else{
                     ArrayTreeNode<T>parentNode=tree[parentIndex],shiftNode=tree[left];
                     parentNode.setLeft(shiftNode.getRight());
                     shiftNode.setLeft(rootNode.getLeft());
@@ -139,6 +143,7 @@ public class BinaryArrayLinkedSearchTree<T>extends BinaryArrayLinkedTree<T>imple
         if(tComparable.compareTo(tree[nodeIndex].getElement())!=0)return null;
 
         ArrayTreeNode<T>parentNode=tree[parentIndex],targetNode=tree[nodeIndex];
+
         T resultElement=targetNode.getElement();
         if(targetNode.getLeft()==-1&&targetNode.getRight()==-1){
             if(parentNode.getRight()==nodeIndex){
@@ -215,11 +220,11 @@ public class BinaryArrayLinkedSearchTree<T>extends BinaryArrayLinkedTree<T>imple
     @Override
     public T removeMax() {
         if(isEmpty())return null;
-        T resultELement;
+        T resultElement;
         if(size()==1){
-            resultELement=tree[rootIndex].getElement();
+            resultElement=tree[rootIndex].getElement();
             tree[rootIndex]=null;
-            return resultELement;
+            return resultElement;
         }
 
         int parentindex=rootIndex;
@@ -229,24 +234,22 @@ public class BinaryArrayLinkedSearchTree<T>extends BinaryArrayLinkedTree<T>imple
         int right=tree[parentindex].getRight();
         tree[parentindex].setRight(-1);
 
-        resultELement=tree[right].getElement();
+        resultElement=tree[right].getElement();
 
         tree[right]=null;
         deque.enqueue(right);
-        return resultELement;
+        return resultElement;
     }
 
     @Override
     public T removeMin() {
         if(isEmpty())return null;
-        T resultELement;
+        T resultElement;
         if(size()==1){
-            resultELement=tree[rootIndex].getElement();
+            resultElement=tree[rootIndex].getElement();
             tree[rootIndex]=null;
-            return resultELement;
+            return resultElement;
         }
-
-
         int parentindex=rootIndex;
         while(tree[parentindex].getLeft()!=-1&&tree[tree[parentindex].getLeft()].getLeft()!=-1){
             parentindex=tree[parentindex].getLeft();
@@ -254,11 +257,11 @@ public class BinaryArrayLinkedSearchTree<T>extends BinaryArrayLinkedTree<T>imple
         int left=tree[parentindex].getLeft();
         tree[parentindex].setLeft(-1);
 
-        resultELement=tree[left].getElement();
+        resultElement=tree[left].getElement();
 
         tree[left]=null;
         deque.enqueue(left);
-        return resultELement;
+        return resultElement;
     }
 
     @Override

@@ -1,3 +1,4 @@
+import com.company.Tree.SearchTree.BinaryArrayCalcSearchTree;
 import com.company.Tree.SearchTree.BinaryArrayLinkedSearchTree;
 import com.company.Tree.SearchTree.BinarySearchLinkedTree;
 import com.company.Tree.SearchTree.BinarySearchTreeADT;
@@ -32,33 +33,33 @@ public class testTree {
         while(iterator.hasNext()){
             System.out.print(iterator.next()+" ");
         }
-
     }
-    @Test
-    public void testBruteForceTree()throws Exception{
-        BinaryArrayLinkedSearchTree<Integer> tree=new BinaryArrayLinkedSearchTree<>();
+
+    public void testCalcTree(BinarySearchTreeADT<Integer> tree)throws Exception{
+
         for(int i=0;i<5;++i){
             tree.addElement(i);
         }
-        //System.out.println(tree.size());
         for(int i=0;i>-6;--i){
             tree.addElement(i);
         }
+        System.out.println(tree.size());
+        Iterator iterator=tree.iterator();
+        while (iterator.hasNext()){
+            System.out.print(iterator.next()+" ");
+        }
         Integer a=tree.removeElement(6);
-        //System.out.println(tree.size());
-
-
-/**
+        System.out.println("delete 6 is:"+a);
         int answer=tree.find(4);
         System.out.println(answer);
- **/
-        //System.out.println(tree.findMax()+" "+tree.findMin());
+
         System.out.println(tree.removeMax()+" "+tree.removeMin());
         //System.out.println(tree.findMax()+" "+tree.findMin());
         tree.removeAllOccurrences(0);
 
         tree.removeElement(-2);
-        Iterator iterator=tree.iterator();
+        tree.removeElement(-1);
+        iterator=tree.iterator();
         while (iterator.hasNext()){
             System.out.print(iterator.next()+" ");
         }
@@ -66,4 +67,10 @@ public class testTree {
         //error
         System.out.println(tree.size());
     }
+    @Test
+    public void testLinkedTree()throws Exception{
+        BinaryArrayLinkedSearchTree<Integer> tree=new BinaryArrayLinkedSearchTree<>();
+        testCalcTree(tree);
+    }
+
 }

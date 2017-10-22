@@ -35,7 +35,7 @@ public class BinaryArrayCalcTree<T>implements BinaryTreeADT<T> {
 
     @Override
     public boolean contains(T targetElement) {
-        return (find(targetElement)!=null);
+        return find(targetElement)==null?false:true;
     }
 
     @Override
