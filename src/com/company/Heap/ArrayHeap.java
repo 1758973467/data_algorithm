@@ -1,10 +1,8 @@
 package com.company.Heap;
 
-import com.company.List.ArrayUnOrderedList;
+import com.company.Tree.BinaryArrayCalcTree;
 
-import java.util.Iterator;
-
-public class ArrayHeap<T> implements HeapADT<T>{
+public class ArrayHeap<T> extends BinaryArrayCalcTree<T>implements HeapADT<T>{
     private final static int DEFAULT_CAPACITY=50;
     private int count;
     private int modCount;
@@ -33,7 +31,7 @@ public class ArrayHeap<T> implements HeapADT<T>{
         }
     }
 
-    private void expandCapacity() {
+    protected void expandCapacity() {
         T newTree[]=(T [])new Object[tree.length*2];
         System.arraycopy(tree,0,newTree,0,tree.length);
         tree=newTree;
@@ -62,12 +60,16 @@ public class ArrayHeap<T> implements HeapADT<T>{
         modCount--;
         return minELement;
     }
+    //TODO 简单处理了Index Out of Bounded Exception , must refactor this code,more occur Out of Memory Exception
 
     private void heapifyRemove() {
         T temp;
         int node=0;
         int left=1,right=2;
         int next;
+        if(left>=tree.length||right>=tree.length){
+            expandCapacity();
+        }
         if(tree[left]==null&&tree[right]==null){
             next=count;
         }else if(tree[right]==null){
@@ -83,7 +85,7 @@ public class ArrayHeap<T> implements HeapADT<T>{
             node=next;
             left=2*node+1;
             right=2*node+2;
-            if(left>=tree.length&&right>=tree.length){
+            if(left>=tree.length||right>=tree.length){
                 expandCapacity();
             }
             if(tree[left]==null&&tree[right]==null){
@@ -107,108 +109,5 @@ public class ArrayHeap<T> implements HeapADT<T>{
         return minELement;
     }
 
-    @Override
-    public T getRootElement() {
-        return findMin();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return (size()<=0);
-    }
-
-    @Override
-    public int size() {
-        return count;
-    }
-
-    @Override
-    public boolean contains(Object targetElement) {
-        return false;
-    }
-
-    @Override
-    public T find(Object targetElement) {
-        int resultIndex=-1;
-        for(int i=0;i<tree.length;++i){
-            if(tree[i]!=null&&tree[i].equals(targetElement)){
-                resultIndex=i;
-                break;
-            }
-        }
-        if(resultIndex!=-1)
-            return tree[resultIndex];
-        else return null;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return iteratorInOrder();
-    }
-
-    @Override
-    public Iterator<T> iteratorInOrder() {
-        ArrayUnOrderedList<T> list=new ArrayUnOrderedList<>();
-        _iteratorInOrder(0,list);
-        return list.iterator();
-    }
-
-    private void _iteratorInOrder(int i, ArrayUnOrderedList<T> list) {
-        if(i>=tree.length||tree[i]==null)return;
-        else{
-            _iteratorInOrder(2*i+1,list);
-            list.addToRear(tree[i]);
-            _iteratorInOrder(2*i+2,list);
-        }
-    }
-
-
-    @Override
-    public Iterator<T> iteratorPreOrder() {
-        ArrayUnOrderedList<T> list=new ArrayUnOrderedList<>();
-        _iteratorPreOrder(0,list);
-        return list.iterator();
-    }
-
-    private void _iteratorPreOrder(int i, ArrayUnOrderedList<T> list) {
-        if(i>=tree.length||tree[i]==null)return;
-        else{
-            list.addToRear(tree[i]);
-            _iteratorInOrder(2*i+1,list);
-            _iteratorInOrder(2*i+2,list);
-        }
-    }
-
-    @Override
-    public Iterator<T> iteratorPostOrder() {
-        ArrayUnOrderedList<T> list=new ArrayUnOrderedList<>();
-        _iteratorPostOrder(0,list);
-        return list.iterator();
-
-    }
-
-    private void _iteratorPostOrder(int i, ArrayUnOrderedList<T> list) {
-        if(i>=tree.length||tree[i]==null)return;
-        else{
-
-            _iteratorInOrder(2*i+1,list);
-            _iteratorInOrder(2*i+2,list);
-            list.addToRear(tree[i]);
-        }
-    }
-    //因为这本来是按层排序的
-    @Override
-    public Iterator<T> iteratorLevelOrder() {
-        if(tree[0]==null) return null;
-        else{
-            ArrayUnOrderedList<T> list=new ArrayUnOrderedList<>();
-            for(int i=0;i<tree.length;++i){
-                if(tree[i]!=null){
-                    list.addToRear(tree[i]);
-                }
-            }
-            return list.iterator();
-        }
-    }
 
 }

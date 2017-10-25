@@ -28,7 +28,7 @@ public class BinaryArrayCalcSearchTree<T>extends BinaryArrayCalcTree<T>implement
         }
     }
 
-    private void expandCapacity() {
+    protected void expandCapacity() {
         T newTree[]=(T [])new Object[tree.length*2];
         System.arraycopy(tree,0,newTree,0,tree.length);
         tree=newTree;

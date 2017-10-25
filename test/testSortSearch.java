@@ -12,11 +12,11 @@ public class testSortSearch {
     @Before
     public void testSpeedBefore(){
 
-        array=new Integer[100];
+        array=new Integer[10];
         for(int i=0;i<array.length;++i){
-            array[i]=random.nextInt()%400;
+            array[i]=random.nextInt()%40;
         }
-        orderArray=new Integer[100];
+        orderArray=new Integer[10];
         for(int i=0;i<orderArray.length;++i){
             orderArray[i]=i+5;
         }
@@ -127,16 +127,17 @@ public class testSortSearch {
     }
     @Test
     public void testHeapSortTime(){
-        long start=System.currentTimeMillis();
-        Sort.InsertSort(array);
-        long end=System.currentTimeMillis();
-        long cosumer=end-start;
-        System.out.println("HeapSort: randomArray "+cosumer+" ms");
-        start=System.currentTimeMillis();
-        Sort.HeapSort(orderArray);
-        end=System.currentTimeMillis();
-        cosumer=end-start;
-        System.out.println("HeapSort: orderArray "+cosumer+" ms");
+
+        for(int i=0;i<array.length;++i){
+            System.out.print(array[i]+" ");
+        }
+        System.out.println();
+        Sort.HeapSortEffcient(array);
+
+        for(int i=0;i<array.length;++i){
+            System.out.print(array[i]+" ");
+        }
+        System.out.println();
     }
     @Test
     public void testSearch(){
@@ -145,4 +146,5 @@ public class testSortSearch {
         res=Search.LinearSearch(array,array[array.length-1]);
         System.out.println(res);
     }
+
 }

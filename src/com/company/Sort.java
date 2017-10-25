@@ -128,9 +128,47 @@ public class Sort<T extends Comparable<T>> {
             array[count]=temp.removeMin();
         }
     }
+
+    /**
+     * this method use heapsort
+     * main thought is select tree 最后一个非叶子节点开始调整，如果调整影响了子树，递归调整
+     * @param array
+     * @param <T>
+     */
+    public static <T extends Comparable<T>>void HeapSortEffcient(T []array){
+        for(int i=array.length/2-1;i>=0;--i){
+            adjustMinHeap(array,i,array.length);
+
+        }
+
+        for(int i=array.length-1;i>1;--i){
+            swap(array,0,i);
+            adjustMinHeap(array,0,i-1);
+        }
+
+    }
+    private static <T extends Comparable<T>> void adjustMinHeap(T []array,int index,int length){
+        int left=2*index+1;
+        int right=left+1;
+        int next;
+        while(index<length&&left<length){
+            if(right>=length){
+                next=left;
+            }
+            else if(array[left].compareTo(array[right])>0){
+                next=right;
+            }
+            else next=left;
+            if(array[index].compareTo(array[next])>0){
+                swap(array,next,index);
+                index=next;
+                left=2*index+1;
+                right=left+1;
+            }
+            else break;
+        }
+    }
     private static <T extends Comparable<T>>void merge(T[] array, int first, int middle, int last) {
-
-
         T []tempArray=(T [])(new Comparable[array.length]);
         int first1=first,last1=middle;
         int first2=middle+1,last2=last;

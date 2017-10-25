@@ -60,7 +60,6 @@ public class BinaryArrayLinkedSearchTree<T>extends BinaryArrayLinkedTree<T>imple
         }
 
     }
-//TODO error behavior
     @Override
     public T removeElement(T targetElement) {
         if(!(targetElement instanceof Comparable))return null;
