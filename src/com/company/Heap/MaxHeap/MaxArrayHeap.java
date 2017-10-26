@@ -89,6 +89,45 @@ public class MaxArrayHeap<T>extends BinaryArrayCalcTree<T> implements MaxHeapADT
     }
 
     @Override
+    public T find(T targetElement) {
+        if (isEmpty()) return null;
+        if (!(targetElement instanceof Comparable)) return null;
+        T resultElement = null;
+        Comparable<T> tComparable = (Comparable) targetElement;
+        if (tComparable.compareTo(tree[0]) > 0) {
+            resultElement = null;
+        } else if (tComparable.compareTo(tree[0]) == 0) {
+            resultElement = tree[0];
+        } else {
+            resultElement = _find(targetElement, 2 * 0 + 1);
+            if (resultElement != null) {
+                resultElement = _find(targetElement, 2 * 0 + 2);
+            }
+        }
+        return resultElement;
+    }
+
+    private T _find(T targetElement, int index) {
+        T resultElement = null;
+        if (index >= tree.length) {
+            resultElement = null;
+        }
+        Comparable<T> tComparable = (Comparable) targetElement;
+        if (tComparable.compareTo(tree[index]) > 0) {
+            resultElement = null;
+        } else if (tComparable.compareTo(tree[index]) == 0) {
+            resultElement = tree[index];
+        } else {
+            resultElement = _find(targetElement, 2 * index + 1);
+            if (resultElement != null) {
+                resultElement = _find(targetElement, 2 * index + 2);
+            }
+
+        }
+        return resultElement;
+    }
+
+    @Override
     public int size() {
         return count;
     }

@@ -145,4 +145,46 @@ public class MaxLinkedHeap<T>extends BinaryLinkedTree<T>implements MaxHeapADT<T>
         }
         return result;
     }
+
+    @Override
+    public T find(T targetElement) {
+        if(isEmpty())return null;
+        if(!(targetElement instanceof Comparable))return null;
+        T result;
+        Comparable<T>tComparable=(Comparable<T>)targetElement;
+        HeapNode<T>node=root;
+
+        if(tComparable.compareTo(root.getElement())>0){
+            result= null;//NOT FOUND;
+        }
+        else if(tComparable.compareTo(root.getElement())==0){
+            result=root.getElement();
+        }
+        else {
+            result=_find(targetElement,root);
+        }
+        return result;
+    }
+
+    private T _find(T targetElement, HeapNode<T> node) {
+        T result;
+        Comparable<T>tComparable=(Comparable<T>)targetElement;
+        if(node==null) return null;
+        else{
+            if(tComparable.compareTo(node.getElement())>0){
+                result= null;//NOT FOUND;
+            }
+            else if(tComparable.compareTo(node.getElement())==0){
+                result=node.getElement();
+            }
+            else {
+                result=_find(targetElement,(HeapNode<T>)node.getLeft());
+                if(result==null){
+                    result=_find(targetElement,(HeapNode<T>)node.getRight());
+                }
+            }
+        }
+        return result;
+    }
+
 }

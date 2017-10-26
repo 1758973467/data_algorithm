@@ -58,10 +58,12 @@ public class testHeap {
             System.out.print(iterator.next()+" ");
         }
         System.out.println();
+        System.out.println(maxHeap.find(5));
         while(!maxHeap.isEmpty()){
             System.out.print(maxHeap.removeMax()+" ");
         }
         System.out.println();
+
     }
 
 }

@@ -42,4 +42,8 @@ public class ExpressionTreeOp {
     public int getValue() {
         return value;
     }
+
+    public void setAlertpriority(int alertpriority) {
+        this.alertpriority = alertpriority;
+    }
 }

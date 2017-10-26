@@ -2,59 +2,61 @@ package com.company.Heap;
 
 import com.company.Tree.BinaryArrayCalcTree;
 
-public class ArrayHeap<T> extends BinaryArrayCalcTree<T>implements HeapADT<T>{
-    private final static int DEFAULT_CAPACITY=50;
+public class ArrayHeap<T> extends BinaryArrayCalcTree<T>implements HeapADT<T> {
+    private final static int DEFAULT_CAPACITY = 50;
     private int count;
     private int modCount;
-    protected T[]tree;
+    protected T[] tree;
 
     public ArrayHeap() {
-        count=0;
+        count = 0;
         //modCount=0;
-        tree=(T [])new Object[DEFAULT_CAPACITY];
+        tree = (T[]) new Object[DEFAULT_CAPACITY];
     }
-    public ArrayHeap(T element){
-        count=1;
-        tree=(T [])new Object[DEFAULT_CAPACITY];
-        tree[0]=element;
+
+    public ArrayHeap(T element) {
+        count = 1;
+        tree = (T[]) new Object[DEFAULT_CAPACITY];
+        tree[0] = element;
     }
+
     @Override
     public void addElement(T element) {
-        if(count==tree.length){
+        if (count == tree.length) {
             expandCapacity();
         }
-        tree[count]=element;
+        tree[count] = element;
         count++;
         modCount++;
-        if(count<1){
+        if (count < 1) {
             heapifyAdd();
         }
     }
 
     protected void expandCapacity() {
-        T newTree[]=(T [])new Object[tree.length*2];
-        System.arraycopy(tree,0,newTree,0,tree.length);
-        tree=newTree;
+        T newTree[] = (T[]) new Object[tree.length * 2];
+        System.arraycopy(tree, 0, newTree, 0, tree.length);
+        tree = newTree;
     }
 
     //进行heap 整理，满足最小
     private void heapifyAdd() {
         T temp;
-        int next=count-1;
-        temp=tree[next];
-        while((next!=0)&&((Comparable)temp).compareTo(tree[(next-1)/2])<0){
-            tree[next]=tree[(next-1)/2];
-            next=(next-1)/2;
+        int next = count - 1;
+        temp = tree[next];
+        while ((next != 0) && ((Comparable) temp).compareTo(tree[(next - 1) / 2]) < 0) {
+            tree[next] = tree[(next - 1) / 2];
+            next = (next - 1) / 2;
         }
-        tree[next]=temp;
+        tree[next] = temp;
     }
 
     @Override
     public T removeMin() {
-        if(isEmpty())return null;
+        if (isEmpty()) return null;
 
-        T minELement=tree[0];
-        tree[0]=tree[count-1];
+        T minELement = tree[0];
+        tree[0] = tree[count - 1];
         heapifyRemove();
         count--;
         modCount--;
@@ -64,50 +66,88 @@ public class ArrayHeap<T> extends BinaryArrayCalcTree<T>implements HeapADT<T>{
 
     private void heapifyRemove() {
         T temp;
-        int node=0;
-        int left=1,right=2;
+        int node = 0;
+        int left = 1, right = 2;
         int next;
-        if(left>=tree.length||right>=tree.length){
+        if (left >= tree.length || right >= tree.length) {
             expandCapacity();
         }
-        if(tree[left]==null&&tree[right]==null){
-            next=count;
-        }else if(tree[right]==null){
-            next=left;
-        }else if(((Comparable)tree[left]).compareTo(tree[right])<0){
-            next=left;
-        }else{
-            next=right;
+        if (tree[left] == null && tree[right] == null) {
+            next = count;
+        } else if (tree[right] == null) {
+            next = left;
+        } else if (((Comparable) tree[left]).compareTo(tree[right]) < 0) {
+            next = left;
+        } else {
+            next = right;
         }
-        temp=tree[node];
-        while(next<count&&((Comparable)tree[next]).compareTo(temp)<0){
-            tree[node]=tree[next];
-            node=next;
-            left=2*node+1;
-            right=2*node+2;
-            if(left>=tree.length||right>=tree.length){
+        temp = tree[node];
+        while (next < count && ((Comparable) tree[next]).compareTo(temp) < 0) {
+            tree[node] = tree[next];
+            node = next;
+            left = 2 * node + 1;
+            right = 2 * node + 2;
+            if (left >= tree.length || right >= tree.length) {
                 expandCapacity();
             }
-            if(tree[left]==null&&tree[right]==null){
-                next=count;
-            }else if(tree[right]==null){
-                next=left;
-            }else if(((Comparable)tree[left]).compareTo(tree[right])<0){
-                next=left;
-            }else{
-                next=right;
+            if (tree[left] == null && tree[right] == null) {
+                next = count;
+            } else if (tree[right] == null) {
+                next = left;
+            } else if (((Comparable) tree[left]).compareTo(tree[right]) < 0) {
+                next = left;
+            } else {
+                next = right;
             }
 
         }
-        tree[node]=temp;
+        tree[node] = temp;
     }
 
     @Override
     public T findMin() {
-        if(isEmpty())return null;
-        T minELement=tree[0];
+        if (isEmpty()) return null;
+        T minELement = tree[0];
         return minELement;
     }
 
+    @Override
+    public T find(T targetElement) {
+        if (isEmpty()) return null;
+        if (!(targetElement instanceof Comparable)) return null;
+        T resultElement = null;
+        Comparable<T> tComparable = (Comparable) targetElement;
+        if (tComparable.compareTo(tree[0]) < 0) {
+            resultElement = null;
+        } else if (tComparable.compareTo(tree[0]) == 0) {
+            resultElement = tree[0];
+        } else {
+            resultElement = _find(targetElement, 2 * 0 + 1);
+            if (resultElement != null) {
+                resultElement = _find(targetElement, 2 * 0 + 2);
+            }
+        }
+        return resultElement;
+    }
+
+    private T _find(T targetElement, int index) {
+        T resultElement = null;
+        if (index >= tree.length) {
+            resultElement = null;
+        }
+        Comparable<T> tComparable = (Comparable) targetElement;
+        if (tComparable.compareTo(tree[index]) < 0) {
+            resultElement = null;
+        } else if (tComparable.compareTo(tree[index]) == 0) {
+            resultElement = tree[index];
+        } else {
+            resultElement = _find(targetElement, 2 * index + 1);
+            if (resultElement != null) {
+                resultElement = _find(targetElement, 2 * index + 2);
+            }
+
+        }
+        return resultElement;
+    }
 
 }

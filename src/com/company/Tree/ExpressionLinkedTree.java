@@ -29,10 +29,9 @@ public class ExpressionLinkedTree extends BinaryLinkedTree<ExpressionTreeOp> {
                         tempNode=tempNode.getRight();
                         --alertPriority;
                     }
-                    ExpressionTreeOp old=tempNode.getElement();
-                    tempNode.setElement(targetElement);
-                    tempNode.setLeft(new BinaryTreeNode<>(old,tempNode.getLeft(),tempNode.getRight()));
-                    tempNode.setRight(null);
+                    assert(alertPriority==0);
+                    targetElement.setAlertpriority(0);
+                    _addElement(tempNode,targetElement);
                 }
                 else {
                     if(rootElement.getPriority()>=targetElement.getPriority()){
@@ -133,9 +132,7 @@ public class ExpressionLinkedTree extends BinaryLinkedTree<ExpressionTreeOp> {
         }
     }
     public void buildIgnoreBrackets(String expression){
-
         String newexpression=expression.replaceAll("\\("," ").replaceAll("\\)"," ");
-        System.out.println(newexpression);
         build(newexpression);
     }
 }
