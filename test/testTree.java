@@ -1,4 +1,6 @@
-import com.company.Tree.SearchTree.BinaryArrayCalcSearchTree;
+import com.company.Heap.PriorityQueueNode;
+import com.company.Tree.BinaryTreeNode;
+import com.company.Tree.HuffmanTree;
 import com.company.Tree.SearchTree.BinaryArrayLinkedSearchTree;
 import com.company.Tree.SearchTree.BinarySearchLinkedTree;
 import com.company.Tree.SearchTree.BinarySearchTreeADT;
@@ -72,5 +74,12 @@ public class testTree {
         BinaryArrayLinkedSearchTree<Integer> tree=new BinaryArrayLinkedSearchTree<>();
         testCalcTree(tree);
     }
-
+    @Test
+    public void testHuffmanTree(){
+        String str="123122";
+        HuffmanTree huffmanTree=new HuffmanTree();
+        String result=huffmanTree.Encode(str);
+        assert(result.equals("011000100110000"));
+        //System.out.println(root);
+    }
 }

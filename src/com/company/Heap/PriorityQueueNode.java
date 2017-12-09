@@ -1,6 +1,8 @@
 package com.company.Heap;
 
-public class PriorityQueueNode<T>implements Comparable<PriorityQueueNode> {
+import java.util.Comparator;
+
+public class PriorityQueueNode<T>implements Comparable<PriorityQueueNode> ,Comparator<PriorityQueueNode>{
     private int priority;
     private int arrivalcode;
     private T element;
@@ -42,5 +44,19 @@ public class PriorityQueueNode<T>implements Comparable<PriorityQueueNode> {
             result=-1;
         }else result=-1;
         return result;
+    }
+
+    @Override
+    public int compare(PriorityQueueNode o1, PriorityQueueNode o2) {
+        return o1.compareTo(o2);
+    }
+
+    @Override
+    public String toString() {
+        return "PriorityQueueNode{" +
+                "priority=" + priority +
+                ", arrivalcode=" + arrivalcode +
+                ", element=" + element +
+                '}';
     }
 }

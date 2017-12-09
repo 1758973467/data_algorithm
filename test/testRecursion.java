@@ -1,7 +1,7 @@
-import com.company.recursion.EightQueue;
-import com.company.recursion.LanguageGenerator;
-import com.company.recursion.PascalTri;
-import com.company.recursion.TowerOfHanoi;
+import com.company.Recursion.EightQueue;
+import com.company.Recursion.LanguageGenerator;
+import com.company.Recursion.PascalTri;
+import com.company.Recursion.TowerOfHanoi;
 import org.junit.Test;
 
 import java.util.List;

@@ -1,6 +1,8 @@
 package com.company.Tree;
 
-public class BinaryTreeNode<T> {
+import java.util.Comparator;
+
+public class BinaryTreeNode<T> implements Comparator<BinaryTreeNode<T>>{
     private T element;
     private BinaryTreeNode<T>left;
     private BinaryTreeNode<T>right;
@@ -51,5 +53,21 @@ public class BinaryTreeNode<T> {
         if(this.left!=null||this.right!=null){
             return false;
         }else return true;
+    }
+
+    @Override
+    public int compare(BinaryTreeNode o1, BinaryTreeNode o2) {
+        Comparable<T>tComparable1=(Comparable)o1.getElement();
+
+        return tComparable1.compareTo((T)o2.getElement());
+    }
+
+    @Override
+    public String toString() {
+        return "BinaryTreeNode{" +
+                "element=" + element +
+                ", left=" + left +
+                ", right=" + right +
+                '}';
     }
 }
